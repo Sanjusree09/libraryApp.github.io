@@ -1,0 +1,387 @@
+<div class="bg-gray-100 flex">
+
+  <div class="w-64 h-screen bg-indigo-950 p-5 h-full">
+    <div class="flex items-center mb-5">
+      <img src="lib.jpg" alt="librarylogo" class="rounded-lg w-14 h-14">
+        <h2 class="text-white text-xl font-bold ml-2">Librarian Panel</h2>
+    </div>
+    <ul class="mb-3">
+      <button id="memberBtn" class="text-white hover:bg-indigo-700 rounded-lg px-3 py-2 block w-full text-left mb-3 mt-2" (click)="member()">Member</button>
+      <button id="memberBtn" class="text-white hover:bg-indigo-700 rounded-lg px-3 py-2 block w-full text-left mb-3" (click)="addMembers()" >Add Member</button>
+      <button id="memberBtn" class="text-white hover:bg-indigo-700 rounded-lg px-3 py-2 block w-full text-left mb-4" (click)="updateMember()" >Update Member</button><hr>
+      <button id="booksBtn" class="text-white hover:bg-indigo-700 rounded-lg px-3 py-2 block w-full text-left mb-3 mt-2" (click)="toggleBook()">Books</button>
+      <button id="registryBtn" class="text-white hover:bg-indigo-700 rounded-lg px-3 py-2 block w-full text-left mb-3" (click)="addBooks()">Add Book</button>
+      <button id="registryBtn" class="text-white hover:bg-indigo-700 rounded-lg px-3 py-2 block w-full text-left mb-4" (click)="updateBooks()">Update Book</button><hr>
+      <button id="registryBtn" class="text-white hover:bg-indigo-700 rounded-lg px-3 py-2 block w-full text-left mb-3 mt-2" (click)="registry()">Registry</button>
+      <button id="registryBtn" class="text-white hover:bg-indigo-700 rounded-lg px-3 py-2 block w-full text-left mb-3" (click)="addRegistry()">Add Registry</button>
+      <button id="registryBtn" class="text-white hover:bg-indigo-700 rounded-lg px-3 py-2 block w-full text-left mb-3" (click)="updateRegistry()">Update Registry</button>
+          
+           
+    </ul>
+  </div>
+
+    
+  <div class="flex-1 ">
+    <h1 class="text-3xl font-bold mb-5 mt-7 ml-2 ">Welcome to Librarian Panel</h1>
+
+    <!--Show Books(showBooks) -->
+    
+      <div class="p-1 rounded-lg ml-2" *ngIf="showBooks">
+        <h2 class="text-xl text-black mb-2">Available Books</h2>
+          <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+            <thead>
+              <tr>
+                <th *ngFor="let header of headers" class="mt-2 mb-2 text-left text-gray-500 uppercase tracking-wider border-b font-bold">
+                  {{ header }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let book of books; let i = index" class="bg-gray-100 border-b w-64 h-10">
+                <td>{{ i + 1 }}</td>
+                <td class="cursor-pointer" (click)="selectBook(book.bookId)">{{ book.bookId }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.quantity }}</td>
+                <td>{{ book.edition }}</td> 
+                <td>{{ book.description }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+<!--CREATE BOOKS-->
+
+<div *ngIf="showAddBooks" >
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <form [formGroup]="addBookForm">
+      <div>
+        <label class="block font-semibold" for="title">Title</label>
+        <input formControlName="title"  class="w-full h-5 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="title" type="text" name="name" required="required" autofocus="autofocus">
+      </div>
+      <div class="mt-4">
+        <label class="block font-semibold" for="author">Author</label>
+        <input formControlName="author"  class="w-full h-5 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="author" type="mobileNumber" name="mobileNumber" required="required">
+      </div>
+      <div class="mt-4">
+        <label class="block font-semibold" for="quantity">Quantity</label>
+        <input formControlName="quantity"  class="w-full h-5 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="quantity" type="email" name="email" required="required">
+      </div>
+      <div class="mt-4">
+        <label class="block font-semibold" for="edition">Edition</label>
+        <input formControlName="edition"  class="w-full h-5 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="edition" type="email" name="email" required="required">
+      </div>
+      <div class="mt-4">
+        <label class="block font-semibold" for="description">Description</label>
+        <input formControlName ="description"  class="w-full h-5 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="description" type="email" name="email" required="required">
+      </div>
+      <div class=" mt-8 flex justify-between">
+        <button type="submit" class=" items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-950 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10" (click)="addBook($event)">Add Book</button>
+      </div>
+    </form>
+  </div>
+</div>
+        
+        <!--READ BOOKS selectedBook-->
+        
+  <div *ngIf="selectedBook" class="p-4 mt-4 bg-white border border-gray-300 rounded-lg">
+    <h3 class="text-xl flex font-bold mb-4">Book Details</h3>
+      <button type="button" class="float-right flex focus:outline-none text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-red-900" (click)="closeBookDetails()">Close</button>
+        <div class="flex-column">
+          <strong class="ml-4">Title:</strong> <p class="ml-4">{{ selectedBook.title }}</p>  
+          <strong class="ml-4">Author:</strong> <p class="ml-4">{{ selectedBook.author }}</p>
+          <strong class="ml-4">Edition:</strong><p class="ml-4"> {{ selectedBook.edition }}</p>
+          <strong class="ml-4">Quantity:</strong> <p class="ml-4">{{ selectedBook.quantity }}</p>
+          <strong class="ml-4">Description:</strong> <p class="ml-4">{{ selectedBook.description }}</p>
+
+        </div>
+       
+  </div>
+
+  <!--UPDATE BOOKS  showUpdateBooks-->
+  <div class="p-10" *ngIf="showUpdateBooks">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+  <form [formGroup]="updateBookForm">
+    <div>
+      <label class="block font-semibold" for="bookId">Book Id</label>
+      <input formControlName="bookId" class="w-64 h-2 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="memberName" type="text" name="memberName" required="required" autofocus="autofocus" />
+    </div>
+    <div>
+      <label class="block font-semibold" for="updateTitle">Title</label>
+      <input formControlName="updateTitle" class="w-64 h-2 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="memberName" type="text" name="memberName" required="required" autofocus="autofocus"/>
+    </div>
+    <div class="mt-4">
+      <label class="block font-semibold" for="updateAuthor">Author</label>
+      <input formControlName="updateAuthor" class="w-full h-2 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="memberName" type="text" name="memberName" required="required" autofocus="autofocus"/>
+    </div>
+    <div class="mt-4">
+      <label class="block font-semibold" for="updateQuantity">Quantity</label>
+      <input formControlName="updateQuantity" class="w-full h-2 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="memberName" type="text" name="memberName" required="required" autofocus="autofocus" />
+    </div>
+    <div class="mt-4">
+      <label class="block font-semibold" for="updateEdition">Edition</label>
+      <input formControlName="updateEdition" class="w-full h-2 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="memberName" type="text" name="memberName" required="required" autofocus="autofocus" />
+    </div>
+    <div class="mt-4">
+      <label class="block font-semibold" for="updateDescription">Description</label>
+      <input formControlName="updateDescription" class="w-full h-2 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="memberName" type="text" name="memberName" required="required" autofocus="autofocus"/>
+    </div>
+    <div class="mt-8 flex justify-between">
+      <button type="submit" class=" items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-950 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10" (click)="onUpdateBook($event)">Update Book</button>
+    </div>
+  </form>
+  </div>
+</div>
+    <!--SHOW MEMBERS     showMembers-->
+<div class="p-1 rounded-lg ml-2" *ngIf="showMembers">
+    <h2 class="text-xl text-black mb-2">Patron List</h2>
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+      <thead>
+        <tr>
+          <th *ngFor="let membersHeaders of membersHeaders" class="mt-2 mb-2 text-left text-gray-500 uppercase tracking-wider border-b font-bold">
+            {{membersHeaders}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let patron of patron; let i = index" class="bg-gray-100 border-b w-64 h-10 hover:bg-gray-200">
+          <td>{{i + 1}}</td>
+          <td class="cursor-pointer" (click)="selectMember(patron.memberId)">{{patron.memberId}}</td>
+          <td>{{patron.memberName}}</td>
+          <td>{{patron.memberEmail}}</td>
+          <td>{{patron.memberContactNumber}}</td>
+          <td>{{patron.memberAddress}}</td>
+          <td>{{patron.memberOccupation}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+<!--CREATE MEMBERS    showAddMembers-->
+
+<div class="p-10" *ngIf="showAddMembers">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <form [formGroup]="addmemberForm">
+      <div>
+        <label class="block font-semibold" for="name">Name</label>
+        <input formControlName="memberName"  class="w-full h-5 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="name" type="text" name="name" required="required" autofocus="autofocus">
+      </div>
+      <div class="mt-4">
+        <label class="block font-semibold" for="mobilNumber">Email</label>
+        <input formControlName="memberEmail"  class="w-full h-5 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="mobileNumber" type="mobileNumber" name="mobileNumber" required="required">
+      </div>
+      <div class="mt-4">
+        <label class="block font-semibold" for="email">Contact Number</label>
+        <input formControlName="memberContactNumber"  class="w-full h-5 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="email" type="email" name="email" required="required">
+      </div>
+      <div class="mt-4">
+        <label class="block font-semibold" for="email">Address</label>
+        <input formControlName="memberAddress"  class="w-full h-5 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="email" type="email" name="email" required="required">
+      </div>
+      <div class="mt-4">
+        <label class="block font-semibold" for="email">Occupation</label>
+        <input formControlName="memberOccupation"  class="w-full h-5 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="email" type="email" name="email" required="required">
+      </div>
+      <div class=" mt-8 flex justify-between">
+        <button type="submit" class=" items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-950 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10" (click)="addMember($event)">Add Member</button>
+      </div>
+  </form>
+</div>
+</div>
+
+<!--READ MEMBERS-->
+
+<div *ngIf="selectedMember" class="p-4 mt-4 bg-white border border-gray-300 rounded-lg">
+  <h3 class="text-xl flex font-bold mb-4">Member Details</h3>
+    <button type="button" class="float-right flex focus:outline-none text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-red-900" (click)="closeMemberDetails()">Close</button>
+      <p><strong>Member Name:</strong> {{ selectedMember.memberName }}</p>  
+      <p class="flex"><strong>Email:</strong> {{ selectedMember.memberEmail }}</p>  
+      <p><strong>Contact Number:</strong> {{ selectedMember.memberContactNumber }}</p>
+      <p><strong>Address:</strong> {{ selectedMember.memberAddress }}</p>
+      <p><strong>Occupation:</strong> {{ selectedMember.memberOccupation }}</p>
+</div>
+
+
+<!--UPDATE MEMBERS   showUpdateMembers-->
+
+<div class="p-10" *ngIf="showUpdateMembers" >
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <form  [formGroup]="updateMemberForm">
+      <div>
+        <label class="block font-semibold" for="name">Member Id</label>
+        <input formControlName="memberId"  class="w-full h-5 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="name" type="text" name="name" required="required" autofocus="autofocus">
+      </div>
+      <div>
+        <label class="block font-semibold" for="name">Name</label>
+        <input formControlName="updateMemberName"  class="w-full h-5 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="name" type="text" name="name" required="required" autofocus="autofocus">
+      </div>
+      <div class="mt-4">
+        <label class="block font-semibold" for="mobilNumber">Email</label>
+        <input formControlName="updateMemberEmail"  class="w-full h-5 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="mobileNumber" type="mobileNumber" name="mobileNumber" required="required">
+      </div>
+      <div class="mt-4">
+        <label class="block font-semibold" for="email">Contact Number</label>
+        <input formControlName="updateMemberContactNumber"  class="w-full h-5 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="email" type="email" name="email" required="required">
+      </div>
+      <div class="mt-4">
+        <label class="block font-semibold" for="email">Address</label>
+        <input formControlName="updateMemberAddress"  class="w-full h-5 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="email" type="email" name="email" required="required">
+      </div>
+      <div class="mt-4">
+        <label class="block font-semibold" for="email">Occupation</label>
+        <input formControlName="updateMemberOccupation"  class="w-full h-5 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="email" type="email" name="email" required="required">
+      </div>
+      <div class=" mt-8 flex justify-between">
+        <button type="submit" class=" items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-950 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10" (click)="onUpdateMember($event)" >Update Member</button>
+      </div>
+    </form>
+  </div>
+</div> 
+
+
+<!--REGISTRY    showRegistry-->
+
+<div class="p-4 rounded-lg ml-2 shadow-md" *ngIf="showRegistry">
+  <h2 class="text-xl text-black mb-4 font-semibold">Book Registry</h2>
+  <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+    <thead>
+      <tr>
+        <th *ngFor="let registryHeader of registryHeaders" class="p-2 text-left text-gray-500 uppercase tracking-wider border-b font-bold">{{ registryHeader }}</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let registry of Registry; let i = index" class="bg-gray-100 border-b hover:bg-gray-200">
+        <td class="p-2 text-center">{{ i + 1 }}</td> 
+        <td class="p-2" (click)="selectRegistry(registry.id)">{{ registry.id }}</td> 
+        <td class="p-2">{{ registry.borrowerName }}</td>
+        <td class="p-2">{{ registry.registryTitle }}</td>
+        <td class="p-2">{{ registry.registryAuthor }}</td>
+        <td class="p-2 text-center">{{ registry.registryQuantity }}</td>
+        <td class="p-2 text-center">{{ registry.registryEdition }}</td>
+        <td class="p-2 text-center">{{ registry.registryBorrowedDate | date: 'shortDate' }}</td>
+        <td class="p-2 text-center">{{ registry.registryReturnDate | date: 'shortDate' }}</td>
+      </tr>
+      
+    </tbody>
+  </table>
+  
+</div>
+<!--READ REGISTRY-->
+
+<div *ngIf="selectedRegistry" class="p-4 mt-4 bg-white border border-gray-300 rounded-lg">
+  <h3 class="text-xl flex font-bold mb-4">Registry Details</h3><button type="button" class="float-right flex focus:outline-none text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-red-900 "(click)="closeRegistryDetails()" >Close</button>
+  <p class="flex"><strong>Title:</strong> {{ selectedRegistry.registryTitle }}</p>  
+  <p><strong>Author:</strong> {{ selectedRegistry.registryAuthor }}</p>
+  <p><strong>Edition:</strong> {{ selectedRegistry.registryEdition }}</p>
+  <p><strong>Quantity:</strong> {{ selectedRegistry.registryQuantity }}</p>
+  <p><strong>Borrowed Date:</strong> {{ selectedRegistry.registryBorrowedDate }}</p>
+  <p><strong>Return Date:</strong> {{ selectedRegistry.registryReturnDate }}</p>
+</div>
+
+       
+<!--CREATE REGISTRY  showAddRegistry-->
+
+<div class="p-10" *ngIf="showAddRegistry">
+  <div class="grid grid-cols-1 md:grid-cols-2 ">
+    <form [formGroup]="addRegistryForm" >
+      <div class="mt-1">
+        <label class="block font-semibold " for="name">Member Name</label>
+        <input formControlName="borrowerName" class="w-full h-2 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="memberName" type="text" name="memberName" required="required" autofocus="autofocus">
+      </div>
+      <div>
+        <label class="block font-semibold" for="title">Title</label>
+        <input formControlName="registryTitle" class="w-full h-2 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="memberEmail" type="text" name="memberEmail" required="required" autofocus="autofocus">
+      </div>
+      <div class="mt-4">
+        <label class="block font-semibold" for="author">Author</label>
+        <input formControlName="registryAuthor" class="w-full h-2 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="memberMobileNumber" type="memberAuthor" name="memberMobileNumber" required="required">
+      </div>
+      <div class="mt-4">
+        <label class="block font-semibold" for="quantity">Quantity</label>
+        <input formControlName="registryQuantity" class="w-full h-2 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="memberQuantity" type="number" name="memberQuantity" required="required">
+      </div>
+      <div class="mt-4">
+        <label class="block font-semibold" for="edition">Edition</label>
+        <input formControlName="registryEdition"  class="w-full h-2 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="memberEdition" type="text" name="memberEdition" required="required">
+      </div>
+      <div class="mt-4">
+        <label class="block font-semibold" for="borrowedDate">Borrowed Date</label>
+        <input formControlName="registryBorrowedDate"   class="w-full h-2 text-sm shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="memberBorrowedDate" type="date" name="memberBorrowedDate" required="required">
+      </div>
+      <div class="mt-4">
+        <label class="block font-semibold" for="returnDate">Return Date</label>
+        <input formControlName="registryReturnDate" class="w-full h-2 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="memberReturnDate" type="date" name="memberReturnDate" required="required">
+      </div>
+      <div class=" mt-8">
+        <button type="submit" class="flex w-64 h-10 mt-0 items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-950 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10" (click)="addregistry($event)">Add Registry</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!--UPDATE REGISTRY showUpdateRegistry-->
+
+ <div class="p-10" *ngIf="showUpdateRegistry">
+   
+    <div class="grid grid-cols-1 md:grid-cols-2 ">
+       
+        <form [formGroup]="updateRegistryForm" >
+          <div class="mt-1">
+            <label class="block font-semibold " for="name">Registry ID</label>
+            <input formControlName="registryId" class="w-full h-2 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="memberName" type="text" name="memberName" required="required" autofocus="autofocus">
+        </div>
+            <div class="mt-1">
+                <label class="block font-semibold " for="name">Member Name</label>
+                <input formControlName="updateRegistryBorrowedName" class="w-full h-2 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="memberName" type="text" name="memberName" required="required" autofocus="autofocus">
+            </div>
+          
+            <div>
+                <label class="block font-semibold" for="title">Title</label>
+                <input formControlName="updateRegistryTitle" class="w-full h-2 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="memberEmail" type="text" name="memberEmail" required="required" autofocus="autofocus">
+            </div>
+
+            <div class="mt-4">
+                <label class="block font-semibold" for="author">Author</label>
+                <input formControlName="updateRegistryAuthor" class="w-full h-2 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="memberMobileNumber" type="memberAuthor" name="memberMobileNumber" required="required">
+            </div>
+            <div class="mt-4">
+              <label class="block font-semibold" for="quantity">Quantity</label>
+              <input formControlName="updateRegistryQuantity" class="w-full h-2 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="memberQuantity" type="number" name="memberQuantity" required="required">
+          </div>
+          <div class="mt-4">
+            <label class="block font-semibold" for="edition">Edition</label>
+            <input formControlName="updateRegistryEdition"  class="w-full h-2 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="memberEdition" type="text" name="memberEdition" required="required">
+        </div>
+        <div class="mt-4">
+            <label class="block font-semibold" for="borrowedDate">Borrowed Date</label>
+            <input formControlName="updateRegistryBorrowedDate"   class="w-full h-2 text-sm shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="memberBorrowedDate" type="date" name="memberBorrowedDate" required="required">
+        </div>
+        <div class="mt-4">
+            <label class="block font-semibold" for="returnDate">Return Date</label>
+            <input formControlName="updateRegistryReturnDate" class="w-full h-2 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4 border-none block mt-1 w-full text-lg" id="memberReturnDate" type="date" name="memberReturnDate" required="required">
+        </div>
+        
+    <div class=" mt-8">
+        <button type="submit" class="flex w-64 h-10 mt-0 items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-950 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10" (click)="onUpdateRegistry($event)">Update Registry</button>
+                
+    </div>
+</form>
+
+  
+
+
+</div>
+ 
+
+
+
+
+
+
+
+ 
+
+
+

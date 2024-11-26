@@ -1,0 +1,34 @@
+<div class="bg-indigo-950 h-20 top-0 left-0 fixed">
+    <div class= "flex-row pb-10 top-0 left-0 fixed h-20 bg-indigo-950 w-full">
+        <img src="lib.jpg" alt="librarylogo" class="pt-3 pl-1 rounded-lg w-14 h-30 float-left rounded-sm">
+        
+        <h1 class="text-center text-3xl pt-5 text-white font-Playwrite">"Start your admin journey today!"</h1>
+        
+    </div>
+</div>
+<div class="items-center mt-10 justify-center">
+    <p class="text-4xl font-mono w-full h-full text-center"></p>
+</div>
+<div class="flex justify-center mt-10">
+    <div class="w-full md:w-1/2 bg-gray-100 p-8 mx-auto mt-20">
+       
+        <form [formGroup]="addRegister">
+            <p class="text-4xl mb-10 font-mono uppercase">Register</p>
+            <h4 class="font-mono">Name:</h4>
+            <input formControlName="name" type="text" class="w-full border-slate-800 text-left h-5 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4  block mt-1 w-full text-lg">
+            <h4 class="font-mono">Email:</h4>
+            <input formControlName="email"  type="text" class="w-full border-slate-800 text-left h-5 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4  block mt-1 w-full text-lg">
+            <h4 class="">Role:</h4>
+            <input formControlName="role" type="text" class="w-full border-slate-800 text-left h-5 shadow-inner bg-gray-200 rounded-lg placeholder-black text-2xl p-4  block mt-1 w-full text-lg">
+            
+            <div class="flex flex-wrap justify-between">
+                <button type="button" class="float-right mt-5 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 mr-3 dark:hover:bg-purple-700 dark:focus:ring-purple-900" (click)="login()" >Login</button>
+                <button type="button" class="float-right mt-5  focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 "(click)="onRegister()" >Register</button>
+               
+            </div>
+            
+        </form>
+    </div>
+   
+
+</div>
